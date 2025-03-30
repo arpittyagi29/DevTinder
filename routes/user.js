@@ -79,15 +79,15 @@ res.json({data:users})
 userRouter.get("/user/search",userAuth,async(req,res)=>{
     try{
         const {name}=req.query;
-        console.log(name)
-        const user= await User.find({firstName:name})
+        const name1="^"+name
+       // console.log(name1)
+        const user= await User.find({firstName:{$regex: `${name1}`, $options: "i"  }})
         //console.log(user)
         res.json({mesaage:"search item", data:user})
     }
     catch(err){
         res.status(400).send("Error" + err.message) 
-    }
-    
+    } 
 })
 
 
